@@ -1,3 +1,8 @@
 controllers:
     resource: ../src/Controller/
-    type: attribute
+    type: annotation
+
+#kernel:
+#    resource: ../src/Shared/Infrastructure/Kernel.php
+#    type: annotation
+
