@@ -1,0 +1,26 @@
+parameters:
+  path:
+    - ./src
+  exclude_files:
+   - '#.*\/src\/.*\/Infrastructure\/Adapter\/.*#'
+  layers:
+    - name: ModuleFirst
+      collectors:
+        - type: directory
+          regex: /src/ModuleOne/ .*
+
+    - name: ModuleSecond
+      collectors:
+        - type: directory
+          regex: /src/ModuleSecond/ .*
+
+    - name: Shared
+      collectors:
+        - type: directory
+          regex: /src/Shared/ .*
+
+  ruleset:
+    ModuleOne:
+      - Shared
+    ModuleSecond:
+      - Shared
