@@ -1,8 +1,17 @@
 services:
-#    _defaults:
-#        autowire: true
+    _defaults:
+        autowire: true
 
-    Resource\Fixture\:
+    App\Tests\Resource\Fixture\:
         resource: '%kernel.project_dir%/tests/Resource/Fixture/*'
         tags:
             - { "name": "doctrine.fixture.orm" }
+
+    App\Shared\Infrastructure\Bus\CommandBus:
+        public: true
+
+    App\Shared\Infrastructure\Bus\QueryBus:
+        public: true
+
+    App\Shared\Infrastructure\Bus\EventBus:
+        public: true

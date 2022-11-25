@@ -1,21 +1,21 @@
 parameters:
-  path:
+  paths:
     - ./src
   layers:
     - name: Domain
       collectors:
         - type: directory
-          regex: /src/\w+/Domain/ .*
+          regex: /src/\w+/Domain/.*
 
     - name: Application
       collectors:
         - type: directory
-          regex: /src/\w+/Application/ .*
+          regex: /src/\w+/Application/.*
 
     - name: Infrastructure
       collectors:
         - type: directory
-          regex: /src/\w+/Infrastructure/ .*
+          regex: /src/\w+/Infrastructure/.*
 
   ruleset:
     Domain:

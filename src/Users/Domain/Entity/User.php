@@ -1,10 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Users\Domain\Entity;
 
+use App\Shared\Domain\Security\AuthUserInterface;
 use App\Shared\Domain\Service\UlidService;
+use App\Users\Domain\Service\UserPasswordHasherInterface;
 
-class User
+class User implements AuthUserInterface
 {
     private string $id;
     private string $email;
@@ -31,11 +35,31 @@ class User
         return $this->password;
     }
 
-    public function setPassword(string $password): User
+    public function getRoles(): array
     {
-        $this->password = $password;
-
-        return $this;
+        return [
+            'ROLE_USER',
+        ];
     }
 
+    public function eraseCredentials(): void
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->email;
+    }
+
+    public function setPassword(
+        ?string $password,
+        UserPasswordHasherInterface $passwordHasher
+    ): void {
+        if (is_null($password)) {
+            $this->password = null;
+        }
+
+        $this->password = $passwordHasher->hash($this, $password);
+    }
 }

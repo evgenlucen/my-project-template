@@ -1,26 +1,23 @@
 parameters:
-  path:
+  paths:
     - ./src
   exclude_files:
-   - '#.*\/src\/.*\/Infrastructure\/Adapter\/.*#'
+    - '#.*\/src\/.*\/Infrastructure\/Adapter\/.*#'
   layers:
-    - name: ModuleFirst
-      collectors:
-        - type: directory
-          regex: /src/ModuleOne/ .*
-
-    - name: ModuleSecond
-      collectors:
-        - type: directory
-          regex: /src/ModuleSecond/ .*
-
     - name: Shared
       collectors:
         - type: directory
-          regex: /src/Shared/ .*
-
+          regex: /src/Shared/.*
+    - name: Users
+      collectors:
+        - type: directory
+          regex: /src/Users/.*
+    - name: Recipes
+      collectors:
+        - type: directory
+          regex: /src/Recipes/.*
   ruleset:
-    ModuleOne:
+    Users:
       - Shared
-    ModuleSecond:
+    Recipes:
       - Shared
