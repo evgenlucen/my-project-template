@@ -30,3 +30,4 @@
 
 ## rabbit ##
 /docker/rabbitmq/mnesia
+/docker/rabbitmq/.erlang.cookie
