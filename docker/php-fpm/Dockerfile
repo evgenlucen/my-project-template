@@ -1,12 +1,13 @@
 FROM php:8.1.0-fpm-alpine
 
 # Install packages
-RUN apk add --no-cache curl git build-base zlib-dev oniguruma-dev autoconf bash
+RUN apk add --no-cache curl git zlib-dev oniguruma-dev bash
 
 # Xdebug
 ARG INSTALL_XDEBUG=false
 RUN if [ ${INSTALL_XDEBUG} = true ]; \
     then \
+      apk add --no-cache --upgrade autoconf build-base --update linux-headers; \
       pecl install xdebug && docker-php-ext-enable xdebug; \
     fi;
 
@@ -23,7 +24,7 @@ RUN apk --no-cache add shadow && \
     usermod -o -u ${PUID} -g www-data www-data
 
 # Source code
-RUN chown www-data:www-data /var/www
+RUN chown -R www-data:www-data /var/www
 COPY --chown=www-data:www-data ./ /var/www
 WORKDIR /var/www
 
@@ -34,5 +35,3 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 RUN composer install --no-interaction
 
 CMD php-fpm
-
-EXPOSE 9000
