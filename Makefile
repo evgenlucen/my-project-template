@@ -9,7 +9,7 @@ DOCKER_COMPOSE_PHP_FPM_EXEC = ${DOCKER_COMPOSE} exec -u www-data php-fpm
 # Docker compose
 ##################
 
-dc_build:
+dc_build: create-env-file create-docker-compose-file
 	${DOCKER_COMPOSE} build
 
 dc_start:
@@ -18,7 +18,7 @@ dc_start:
 dc_stop:
 	${DOCKER_COMPOSE} stop
 
-dc_up:
+dc_up: create-env-file create-docker-compose-file
 	${DOCKER_COMPOSE} up -d --remove-orphans
 
 dc_ps:
@@ -78,3 +78,12 @@ cs_fix:
 
 cs_fix_diff:
 	${DOCKER_COMPOSE_PHP_FPM_EXEC} vendor/bin/php-cs-fixer fix --dry-run --diff
+
+##################
+# Service
+##################
+
+create-env-file:
+	test -f docker/.env || cp docker/.env.dist docker/.env
+create-docker-compose-file:
+	test -f docker/docker-compose.yml || cp docker/docker-compose.dist.yml docker/docker-compose.yml
