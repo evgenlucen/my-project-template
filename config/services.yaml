@@ -4,6 +4,10 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    amo.client_id: '%env(AMO_CLIENT_ID)%'
+    amo.client_secret: '%env(AMO_CLIENT_SECRET)%'
+    amo.client_redirect_url: '%env(AMO_CLIENT_REDIRECT_URL)%'
+    amo.access_token_file: '%kernel.project_dir%/amo_access_token.json'
 
 services:
     # default configuration for services in *this* file
@@ -15,6 +19,7 @@ services:
     # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/'
+
 
     _instanceof:
         App\Shared\Application\Command\CommandHandlerInterface:
@@ -29,12 +34,22 @@ services:
             tags:
                 - { name: messenger.message_handler, bus: event.bus }
 
-    App\Users\Infrastructure\Controller\:
-        resource: '../src/Users/Infrastructure/Controller/'
-        tags: [ 'controller.service_arguments' ]
-
-
     App\Shared\Infrastructure\Doctrine\DomainEventSubscriber:
         tags: [ { name: 'doctrine.event_subscriber' } ]
         arguments:
             $containerBag: '@service_container'
+
+# AmoCrmFacade
+    App\AmoCrmFacade\Infrastructure\ApiClient\ApiProvider:
+        arguments:
+            $clientId: '%amo.client_id%'
+            $clientSecret: '%amo.client_secret%'
+            $redirectUri: '%amo.client_redirect_url%'
+
+    App\AmoCrmFacade\Infrastructure\Controller\:
+        resource: '../src/AmoCrmFacade/Infrastructure/Controller/'
+        tags: [ 'controller.service_arguments' ]
+
+    App\AmoCrmFacade\Infrastructure\ApiClient\FileTokenRepository:
+        arguments:
+            $accessTokenFile: '%amo.access_token_file%'
