@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Shared\Infrastructure\Doctrine;
 
 use App\Shared\Application\Event\EventBusInterface;
-use App\Shared\Domain\Entity\Aggregate;
+use App\Shared\Domain\Aggregate;
 use App\Shared\Domain\Specification\SpecificationInterface;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\LifecycleEventArgs;
@@ -59,7 +59,7 @@ final class DomainEventSubscriber implements EventSubscriber
     public function postFlush(PostFlushEventArgs $args): void
     {
         foreach ($this->entities as $entity) {
-            foreach ($entity->popEvents() as $event) {
+            foreach ($entity->releaseEvents() as $event) {
                 $this->eventBus->execute($event);
             }
         }

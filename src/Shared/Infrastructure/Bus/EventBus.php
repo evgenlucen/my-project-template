@@ -6,20 +6,19 @@ namespace App\Shared\Infrastructure\Bus;
 
 use App\Shared\Application\Event\EventBusInterface;
 use App\Shared\Domain\Event\EventInterface;
-use Symfony\Component\Messenger\HandleTrait;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 class EventBus implements EventBusInterface
 {
-    use HandleTrait;
+    private MessageBusInterface $eventBus;
 
     public function __construct(MessageBusInterface $eventBus)
     {
-        $this->messageBus = $eventBus;
+        $this->eventBus = $eventBus;
     }
 
-    public function execute(EventInterface $event): mixed
+    public function execute(EventInterface $event): void
     {
-        return $this->handle($event);
+        $this->eventBus->dispatch($event);
     }
 }
