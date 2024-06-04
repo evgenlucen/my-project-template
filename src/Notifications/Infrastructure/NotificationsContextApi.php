@@ -26,4 +26,22 @@ class NotificationsContextApi
             deliveryTime: $deliveryTime,
         ));
     }
+
+    public function sendSmsNotification(
+        string $context,
+        string $recipient,
+        \DateTimeImmutable $deliveryTime,
+    )
+    {
+        // Todo implement
+    }
+
+    public function sendEmailNotification(
+        string $context,
+        string $recipient,
+        \DateTimeImmutable $deliveryTime,
+    )
+    {
+        // TODO Implement
+    }
 }
