@@ -37,7 +37,8 @@
         "symfony/css-selector": "6.3.*",
         "symfony/phpunit-bridge": "^6.3",
         "symfony/stopwatch": "6.3.*",
-        "symfony/web-profiler-bundle": "6.3.*"
+        "symfony/web-profiler-bundle": "6.3.*",
+        "zenstruck/foundry": "^1.37"
     },
     "config": {
         "allow-plugins": {

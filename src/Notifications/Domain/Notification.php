@@ -9,7 +9,7 @@ use App\Shared\Domain\Service\UlidService;
 class Notification extends Aggregate
 {
     private function __construct(
-        private readonly string $id,
+        private readonly NotificationId $id,
         private string $content,
         private string $recipient, // адресат
         private readonly DeliveryTool $deliveryTool, // средство доставки
@@ -30,12 +30,11 @@ class Notification extends Aggregate
         DeliveryStatus $deliveryStatus,
         \DateTimeImmutable $deliveryTime,// время для доставки
     ): self {
-        $id = UlidService::generate();
         $createdAt = DateTimeService::createNow();
         $updatedAt = DateTimeService::createNow();
 
         return new self(
-            id: $id,
+            id: NotificationId::generate(),
             content: $content,
             recipient: $recipient,
             deliveryTool: $deliveryTool,
@@ -100,7 +99,7 @@ class Notification extends Aggregate
         $this->updatedAt = DateTimeService::createNow();
     }
 
-    public function getId(): string
+    public function getId(): NotificationId
     {
         return $this->id;
     }
