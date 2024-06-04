@@ -1,0 +1,19 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="https://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\Notifications\Domain\Notification" table="notifications_notification">
+        <id name="id">
+            <generator strategy="NONE"/>
+        </id>
+        <field name="createdAt" type="datetime_immutable"/>
+        <field name="updatedAt" type="datetime_immutable"/>
+        <field name="content" type="text"/>
+        <field name="recipient"/>
+        <field name="deliveryTool" type="delivery_tool"/>
+        <field name="deliveryStatus" type="delivery_status"/>
+        <field name="deliveryTime" type="datetime_immutable"/>
+    </entity>
+
+</doctrine-mapping>
