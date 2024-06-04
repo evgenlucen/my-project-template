@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Shared\Infrastructure\Bus;
 
-use App\Shared\Application\Command\CommandBusInterface;
 use App\Shared\Application\Command\CommandInterface;
+use App\Shared\Application\Command\CommandSyncBusInterface;
 use Symfony\Component\Messenger\HandleTrait;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-class CommandBus implements CommandBusInterface
+class CommandSyncBus implements CommandSyncBusInterface
 {
     use HandleTrait;
 

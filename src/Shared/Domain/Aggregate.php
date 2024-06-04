@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Shared\Domain\Entity;
+namespace App\Shared\Domain;
 
 use App\Shared\Domain\Event\EventInterface;
 use App\Shared\Domain\ValueObject\Ulid;

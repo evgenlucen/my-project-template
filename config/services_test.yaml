@@ -7,7 +7,7 @@ services:
         tags:
             - { "name": "doctrine.fixture.orm" }
 
-    App\Shared\Infrastructure\Bus\CommandBus:
+    App\Shared\Infrastructure\Bus\CommandSyncBus:
         public: true
 
     App\Shared\Infrastructure\Bus\QueryBus:
