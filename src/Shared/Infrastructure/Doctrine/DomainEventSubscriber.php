@@ -59,7 +59,7 @@ final class DomainEventSubscriber implements EventSubscriber
     public function postFlush(PostFlushEventArgs $args): void
     {
         foreach ($this->entities as $entity) {
-            foreach ($entity->popEvents() as $event) {
+            foreach ($entity->releaseEvents() as $event) {
                 $this->eventBus->execute($event);
             }
         }

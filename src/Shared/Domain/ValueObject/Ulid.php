@@ -5,7 +5,7 @@ namespace App\Shared\Domain\ValueObject;
 use App\Shared\Domain\Service\AssertService;
 use App\Shared\Domain\Service\UlidService;
 
-class GlobalUserId
+class Ulid
 {
     private string $id;
 
@@ -18,5 +18,10 @@ class GlobalUserId
     public function getId(): string
     {
         return $this->id;
+    }
+
+    public static function generate(): static
+    {
+        return new static(UlidService::generate());
     }
 }

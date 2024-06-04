@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Shared\Domain\Entity;
 
 use App\Shared\Domain\Event\EventInterface;
+use App\Shared\Domain\ValueObject\Ulid;
 
 abstract class Aggregate
 {
@@ -13,12 +14,12 @@ abstract class Aggregate
      */
     private array $events = [];
 
-    abstract public function getId(): string;
+    abstract public function getId(): Ulid;
 
     /**
      * @return EventInterface[]
      */
-    public function popEvents(): array
+    public function releaseEvents(): array
     {
         $events = $this->events;
         $this->events = [];
@@ -26,7 +27,7 @@ abstract class Aggregate
         return $events;
     }
 
-    protected function raise(EventInterface $event): void
+    protected function recordEvent(EventInterface $event): void
     {
         $this->events[] = $event;
     }
