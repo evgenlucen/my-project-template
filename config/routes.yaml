@@ -1,12 +1,16 @@
 controllers:
-    resource: ../src/Shared/Infrastructure/API/Controller/
-    type: annotation
+  resource: ../src/Shared/Infrastructure/API/Controller/
+  type: annotation
 
 kernel:
-    resource: ../src/Shared/Infrastructure/Kernel.php
-    type: annotation
+  resource: ../src/Shared/Infrastructure/Kernel.php
+  type: annotation
 
 
 clients:
-    resource: ../src/Clients/Infrastructure/API/V1/Controller/
-    type: annotation
+  resource: ../src/Clients/Infrastructure/API/V1/Controller/
+  type: annotation
+
+creditRequests:
+  resource: ../src/CreditRequests/Infrastructure/API/V1/Controller/
+  type: annotation

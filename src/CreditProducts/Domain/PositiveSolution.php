@@ -3,6 +3,7 @@
 namespace App\CreditProducts\Domain;
 
 use App\Clients\Domain\Client;
+use App\Clients\Domain\ClientId;
 
 /**
  * Позитивное решение по кредитной заявке
@@ -16,6 +17,11 @@ class PositiveSolution implements Solution
         private readonly CreditAmount $creditAmount,
         private readonly PeriodInMonths $periodInMonth,
     ) {
+    }
+
+    public function getClientId(): ClientId
+    {
+        return $this->client->getId();
     }
 
     public function getClient(): Client
