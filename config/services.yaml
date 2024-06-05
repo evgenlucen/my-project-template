@@ -33,6 +33,6 @@ services:
         resource: '../src/Clients/Infrastructure/API/V1/Controller/'
         tags: [ 'controller.service_arguments' ]
 
-    App\CreditRequests\Infrastructure\API\V1\Controller\:
-        resource: '../src/CreditRequests/Infrastructure/API/V1/Controller/'
+    App\Credit\CreditRequests\Infrastructure\API\V1\Controller\:
+        resource: '../src/Credit/CreditRequests/Infrastructure/API/V1/Controller/'
         tags: [ 'controller.service_arguments' ]

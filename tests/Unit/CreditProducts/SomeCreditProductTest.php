@@ -4,12 +4,13 @@ namespace App\Tests\Unit\CreditProducts;
 
 use App\Clients\Domain\FICO;
 use App\Clients\Infrastructure\Util\FakeFactory\ClientFakeFactory;
-use App\CreditProducts\Domain\CreditAmount;
-use App\CreditProducts\Domain\NegativeSolution;
-use App\CreditProducts\Domain\PeriodInMonths;
-use App\CreditProducts\Domain\PositiveSolution;
-use App\CreditProducts\Domain\Products\SomeCreditProduct;
-use App\CreditRequests\Domain\CreditRequest;
+use App\Credit\CreditProducts\Domain\PeriodInMonths;
+use App\Credit\CreditProducts\Domain\Products\SomeCreditProduct;
+use App\Credit\CreditRequests\Domain\Borrower;
+use App\Credit\CreditRequests\Domain\CreditAmount;
+use App\Credit\CreditRequests\Domain\CreditRequest;
+use App\Credit\CreditRequests\Domain\NegativeSolution;
+use App\Credit\CreditRequests\Domain\PositiveSolution;
 use PHPUnit\Framework\TestCase;
 
 class SomeCreditProductTest extends TestCase
@@ -19,10 +20,12 @@ class SomeCreditProductTest extends TestCase
         $client = ClientFakeFactory::createOne();
         $client->updateFico(new FICO(SomeCreditProduct::FICO_MINIMAL - 1));
 
+        $borrower = Borrower::create($client->getDateOfBirth()->getAge(),$client->getAddress(),$client->getFico());
+
         $creditRequest = CreditRequest::create(
             creditAmount: new CreditAmount(1_000_000),
             periodInMonths: new PeriodInMonths(120),
-            client: $client,
+            borrower: $borrower,
         );
 
         $someProduct = SomeCreditProduct::create();
@@ -36,11 +39,12 @@ class SomeCreditProductTest extends TestCase
     {
         $client = ClientFakeFactory::createOne();
         $client->updateFico(new FICO(SomeCreditProduct::FICO_MINIMAL + 1));
+        $borrower = Borrower::create($client->getDateOfBirth()->getAge(),$client->getAddress(),$client->getFico());
 
         $creditRequest = CreditRequest::create(
             creditAmount: new CreditAmount(1_000_000),
             periodInMonths: new PeriodInMonths(120),
-            client: $client,
+            borrower: $borrower,
         );
 
         $someProduct = SomeCreditProduct::create();

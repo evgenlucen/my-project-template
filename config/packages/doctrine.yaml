@@ -11,6 +11,12 @@ doctrine:
       fico_type: 'App\Clients\Infrastructure\Persistence\Doctrine\ORM\FicoType'
       phone_number_type: 'App\Clients\Infrastructure\Persistence\Doctrine\ORM\PhoneNumberType'
       ssn_type: 'App\Clients\Infrastructure\Persistence\Doctrine\ORM\SsnType'
+      # CreditRequests
+      credit_request_id: 'App\Credit\CreditRequests\Infrastructure\Persistence\Doctrine\ORM\CreditRequestIdType'
+      borrower_type: 'App\Credit\CreditRequests\Infrastructure\Persistence\Doctrine\ORM\BorrowerType'
+      period_in_months_type: 'App\Credit\CreditRequests\Infrastructure\Persistence\Doctrine\ORM\PeriodInMonthsType'
+      solution_type: 'App\Credit\CreditRequests\Infrastructure\Persistence\Doctrine\ORM\SolutionCustomType'
+
   orm:
     auto_generate_proxy_classes: true
     naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
@@ -22,6 +28,18 @@ doctrine:
         dir: '%kernel.project_dir%/src/Clients/Infrastructure/Persistence/Doctrine/ORM'
         prefix: 'App\Clients\Domain'
         alias: Clients
+      CreditRequests:
+        is_bundle: false
+        type: xml
+        dir: '%kernel.project_dir%/src/Credit/CreditRequests/Infrastructure/Persistence/Doctrine/ORM'
+        prefix: 'App\Credit\CreditRequests\Domain'
+        alias: CreditRequests
+      CreditAmount:
+        is_bundle: false
+        type: xml
+        dir: '%kernel.project_dir%/src/Credit/CreditRequests/Infrastructure/Persistence/Doctrine/ORM'
+        prefix: 'App\Credit\CreditRequests\Domain'
+        alias: CreditAmount
       Notifications:
         is_bundle: false
         type: xml

@@ -12,5 +12,5 @@ clients:
   type: annotation
 
 creditRequests:
-  resource: ../src/CreditRequests/Infrastructure/API/V1/Controller/
+  resource: ../src/Credit/CreditRequests/Infrastructure/API/V1/Controller/
   type: annotation
