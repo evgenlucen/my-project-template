@@ -47,7 +47,7 @@ class UpdateClientCommandHandler implements CommandHandlerInterface
         if (null !== $command->email) {
             $clientByEmail = $this->clientRepository->findByEmail(new Email($command->email));
 
-            if ($clientBySSN instanceof Client && $clientByEmail !== $client) {
+            if ($clientByEmail instanceof Client && $clientByEmail !== $client) {
                 throw new \RuntimeException('Указанный Email уже занят');
             }
 
