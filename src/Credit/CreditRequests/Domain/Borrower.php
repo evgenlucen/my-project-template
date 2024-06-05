@@ -18,12 +18,13 @@ class Borrower implements \JsonSerializable
     }
 
     public static function create(
+        BorrowerId $borrowerId,
         int $age,
         Address $address,
         int $fico,
     ): self {
         return new self (
-            id: BorrowerId::generate(),
+            id: $borrowerId,
             age: $age,
             address: $address,
             fico: $fico,

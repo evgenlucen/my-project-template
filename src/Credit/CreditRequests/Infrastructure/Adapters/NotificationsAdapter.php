@@ -20,14 +20,14 @@ class NotificationsAdapter
         $this->notificationsContextApi->createSmsNotification(
             content: CreditRequestNotificationViewFactory::makeSmsNotificationContent($creditRequest),
             recipient: $this->clientAdapter->getBorrowerPhone($creditRequest->getBorrower()->getId()),
-            deliveryTime: DateTimeService::createNow(),
+            deliveryTime: DateTimeService::createNow()->modify('+1 second'),
         );
 
 
         $this->notificationsContextApi->createEmailNotification(
             content: CreditRequestNotificationViewFactory::makeEmailNotificationContent($creditRequest),
             recipient: $this->clientAdapter->getBorrowerEmail($creditRequest->getBorrower()->getId()),
-            deliveryTime: DateTimeService::createNow(),
+            deliveryTime: DateTimeService::createNow()->modify('+10 second'),
         );
     }
 }

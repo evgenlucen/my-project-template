@@ -2,7 +2,6 @@ doctrine:
   dbal:
     url: '%env(resolve:DATABASE_URL)%'
     types:
-      notification_id: 'App\Notifications\Infrastructure\Persistence\Doctrine\ORM\NotificationIdType'
       # Clients
       address_type: 'App\Clients\Infrastructure\Persistence\Doctrine\ORM\AddressInUsaType'
       client_id: 'App\Clients\Infrastructure\Persistence\Doctrine\ORM\ClientIdType'
@@ -16,6 +15,10 @@ doctrine:
       borrower_type: 'App\Credit\CreditRequests\Infrastructure\Persistence\Doctrine\ORM\BorrowerType'
       period_in_months_type: 'App\Credit\CreditRequests\Infrastructure\Persistence\Doctrine\ORM\PeriodInMonthsType'
       solution_type: 'App\Credit\CreditRequests\Infrastructure\Persistence\Doctrine\ORM\SolutionCustomType'
+      # Notifications
+      delivery_tool: 'App\Notifications\Infrastructure\Persistence\Doctrine\ORM\DeliveryToolType'
+      notification_id: 'App\Notifications\Infrastructure\Persistence\Doctrine\ORM\NotificationIdType'
+      delivery_status: 'App\Notifications\Infrastructure\Persistence\Doctrine\ORM\DeliveryStatusType'
 
   orm:
     auto_generate_proxy_classes: true
@@ -43,9 +46,9 @@ doctrine:
       Notifications:
         is_bundle: false
         type: xml
-        dir: '%kernel.project_dir%/src/Notifications/Domain'
+        dir: '%kernel.project_dir%/src/Notifications/Infrastructure/Persistence/Doctrine/ORM'
         prefix: 'App\Notifications\Domain'
-        alias: Notifications
+        alias: Notification
 
 #when@test:
 #    doctrine:

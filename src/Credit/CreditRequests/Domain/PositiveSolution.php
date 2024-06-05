@@ -27,7 +27,7 @@ class PositiveSolution implements Solution
             'creditProductTitle' => $this->creditProductTitle,
             'percentRate' => $this->percentRate->getValue(),
             'creditAmount' => $this->creditAmount->toArray(),
-            'periodInMonth' => $this->periodInMonth->getValue(),
+            'periodInMonths' => $this->periodInMonth->getValue(),
         ];
     }
 
@@ -36,7 +36,7 @@ class PositiveSolution implements Solution
         return new self (
             borrowerId: new BorrowerId($data['borrowerId']),
             creditProductTitle: $data['creditProductTitle'],
-            percentRate: new PercentRate($data['pecentRate']),
+            percentRate: new PercentRate($data['percentRate']),
             creditAmount: new CreditAmount(
                 amount: $data['creditAmount']['amount'],
                 currency: $data['creditAmount']['currency'],

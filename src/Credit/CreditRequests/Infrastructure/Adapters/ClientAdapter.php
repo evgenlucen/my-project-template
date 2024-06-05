@@ -6,6 +6,7 @@ use App\Clients\Domain\Client;
 use App\Clients\Infrastructure\API\Context\ClientContextApi;
 use App\Credit\CreditRequests\Domain\Address;
 use App\Credit\CreditRequests\Domain\Borrower;
+use App\Credit\CreditRequests\Domain\BorrowerId;
 
 class ClientAdapter
 {
@@ -20,6 +21,7 @@ class ClientAdapter
         $client = $this->clientContextApi->getClientById($id);
 
         return Borrower::create(
+            borrowerId: new BorrowerId($client->getId()->toString()),
             age: $client->getDateOfBirth()->getAge(),
             address: new Address(
                 street: $client->getAddress()->getStreet(),
@@ -27,7 +29,7 @@ class ClientAdapter
                 state: $client->getAddress()->getState(),
                 zipCode: $client->getAddress()->getZipCode(),
             ),
-            fico: $client->getFico(),
+            fico: $client->getFico()->getValue(),
         );
     }
 
