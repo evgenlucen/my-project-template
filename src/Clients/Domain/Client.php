@@ -11,15 +11,17 @@ class Client extends Aggregate
 
     public function __construct(
         private readonly ClientId $id,
-        private readonly string $firstName,
-        private readonly string $lastName,
+        private string $firstName,
+        private string $lastName,
         private DateOfBirth $dateOfBirth,
         private AddressInUSA $address,
-        private readonly SSN $ssn, //todo храним только хэш + последние 4 цифры
+        private SSN $ssn, //todo храним только хэш + последние 4 цифры
         private ?FICO $fico,
         private Email $email,
         private AmericanPhoneNumber $phoneNumber,
-    ) {
+        // createdAt, updatedAt не добавлены для упрощения.
+    )
+    {
         AssertService::lengthBetween(
             $this->firstName,
             2,
@@ -64,7 +66,41 @@ class Client extends Aggregate
     public function updateFico(FICO $fico): void
     {
         $this->fico = $fico;
-        // событие FicoUpdated нигде не нужно по условиям задачи, не делаю
+        // событие FicoUpdated не публикуется для упрощения
+    }
+
+    public function updateAddressZipCode(string $zipCode): void
+    {
+        $address = new AddressInUSA(
+            street: $this->address->getCity(),
+            city: $this->address->getCity(),
+            state: $this->address->getState(),
+            zipCode: $zipCode,
+        );
+
+        $this->address = $address;
+    }
+
+    public function updateSsn(SSN $ssn): void
+    {
+        $this->ssn = $ssn;
+        // событие об обновлении, если SSN влияет на FICO.
+        // чтобы обновить FICO.
+    }
+
+    public function updateEmail(Email $email): void
+    {
+        $this->email = $email;
+    }
+
+    public function updateFirstName(string $firstName): void
+    {
+        $this->firstName = $firstName;
+    }
+
+    public function updateLastName(string $lastName): void
+    {
+        $this->lastName = $lastName;
     }
 
     public function getId(): ClientId
@@ -111,6 +147,8 @@ class Client extends Aggregate
     {
         return $this->phoneNumber;
     }
+
+
 
 
 }

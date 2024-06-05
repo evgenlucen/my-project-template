@@ -5,6 +5,7 @@ namespace App\Clients\Infrastructure\Persistence\Doctrine\Repository;
 use App\Clients\Domain\Client;
 use App\Clients\Domain\ClientId;
 use App\Clients\Domain\ClientRepository;
+use App\Clients\Domain\Email;
 use App\Clients\Domain\Exceptions\ClientNotExistsException;
 use App\Clients\Domain\SSN;
 use App\Shared\Infrastructure\Database\Persistence\Doctrine\DoctrineRepository;
@@ -34,5 +35,10 @@ class DoctrineClientRepository extends DoctrineRepository implements ClientRepos
     public function findBySsn(SSN $ssn): ?Client
     {
         return $this->repository(Client::class)->findOneBy(['ssn' => $ssn->getSSN()]);
+    }
+
+    public function findByEmail(Email $email)
+    {
+        return $this->repository(Client::class)->findOneBy(['email' => $email->getValue()]);
     }
 }
