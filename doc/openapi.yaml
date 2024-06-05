@@ -27,7 +27,7 @@ paths:
       summary: Обновить клиента
       operationId: clientsUpdate
       description: |
-        Обновить клиента
+        Разрешено обновления ограниченного набора свойств.
       requestBody:
         $ref: '#/components/requestBodies/UpdateClientRequest'
       responses:
@@ -58,7 +58,7 @@ paths:
         $ref: '#/components/requestBodies/CreateCreditSolutionRequest'
       responses:
         '200':
-          $ref: '#/components/responses/CreditRequestCreatedResponse'
+          $ref: '#/components/responses/CreditRequestSolutionResponse'
 
 components:
   requestBodies:
@@ -83,7 +83,7 @@ components:
 
     CreateCreditSolutionRequest:
       description: |
-        Тело запроса для создания клиента
+        Тело запроса для создания или анализа заявки
       content:
         application/vnd.api+json:
           schema:
@@ -162,26 +162,40 @@ components:
 
   responses:
     CreditRequestSolutionResponse:
-      description: New response
+      description: Решение по кредитной заявке
       content:
         application/json:
           schema:
-            properties:
-              type:
-                type: string
-              attributes:
-                type: object
-                properties:
-                  client:
+            oneOf:
+              - properties:
+                  type:
                     type: string
-                  creditProductTitle:
+                  attributes:
+                    type: object
+                    properties:
+                      client:
+                        type: string
+                      creditProductTitle:
+                        type: string
+                      percentRate:
+                        type: number
+                      creditAmount:
+                        type: number
+                      periodInMonth:
+                        type: integer
+              - properties:
+                  type:
                     type: string
-                  percentRate:
-                    type: number
-                  creditAmount:
-                    type: number
-                  periodInMonth:
-                    type: integer
+                  attributes:
+                    type: object
+                    properties:
+                      client:
+                        type: string
+                      creditProductTitle:
+                        type: string
+                      rejectMessage:
+                        type: string
+
 
     CreditRequestCreatedResponse:
       description: Создана кредитная заявка
