@@ -9,6 +9,6 @@ class ClientAlreadyExistsException extends EntityNotExists
 {
     public function __construct(ClientId $clientId)
     {
-        parent::__construct(sprintf('Client with id: %s already exists', $clientId->getId()));
+        parent::__construct(sprintf('Client with id: %s already exists', $clientId->toString()));
     }
 }

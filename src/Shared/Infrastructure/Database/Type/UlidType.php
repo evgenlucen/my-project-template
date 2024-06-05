@@ -6,20 +6,10 @@ namespace App\Shared\Infrastructure\Database\Type;
 
 use App\Shared\Domain\ValueObject\Ulid;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Doctrine\DBAL\Types\GuidType;
+use Doctrine\DBAL\Types\StringType;
 
-class UlidType extends GuidType
+class UlidType extends StringType
 {
-    protected function typeClassName(): string
-    {
-        return Ulid::class;
-    }
-
-    public static function customTypeName(): string
-    {
-        return 'ulid_type';
-    }
-
     public function convertToPHPValue($value, AbstractPlatform $platform): mixed
     {
         if (null === $value) {
@@ -28,5 +18,10 @@ class UlidType extends GuidType
         $className = $this->typeClassName();
 
         return new $className($value);
+    }
+
+    public function convertToDatabaseValue($value, AbstractPlatform $platform)
+    {
+        return $value instanceof Ulid ? $value->toString() : $value;
     }
 }

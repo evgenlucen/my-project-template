@@ -8,7 +8,7 @@ use App\Shared\Domain\Service\AssertService;
  * Не разбирался детально
  * как должен выглядеть адрес, для упрощения реализовано первичное представление
  */
-class AddressInUSA
+class AddressInUSA implements \JsonSerializable
 {
     public function __construct(
         private readonly string $street,
@@ -50,4 +50,18 @@ class AddressInUSA
         return sprintf('%s, %s, %s, %s', $this->city, $this->street, $this->state, $this->zipCode);
     }
 
+    public function jsonSerialize(): array
+    {
+        return $this->toArray();
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'street' => $this->street,
+            'city' => $this->city,
+            'state' => $this->state,
+            'zipCode' => $this->zipCode,
+        ];
+    }
 }

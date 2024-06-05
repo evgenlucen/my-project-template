@@ -9,6 +9,6 @@ class ClientNotExistsException extends EntityNotExists
 {
     public function __construct(ClientId $clientId)
     {
-        parent::__construct(sprintf('Client with id: %s not found', $clientId->getId()));
+        parent::__construct(sprintf('Client with id: %s not found', $clientId->toString()));
     }
 }

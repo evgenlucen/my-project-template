@@ -15,9 +15,14 @@ class Ulid
         $this->id = $id;
     }
 
-    public function getId(): string
+    public function toString(): string
     {
         return $this->id;
+    }
+
+    public function __toString(): string
+    {
+        return $this->toString();
     }
 
     public static function generate(): static

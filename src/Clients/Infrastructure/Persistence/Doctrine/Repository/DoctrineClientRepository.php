@@ -4,26 +4,35 @@ namespace App\Clients\Infrastructure\Persistence\Doctrine\Repository;
 
 use App\Clients\Domain\Client;
 use App\Clients\Domain\ClientId;
+use App\Clients\Domain\ClientRepository;
+use App\Clients\Domain\Exceptions\ClientNotExistsException;
 use App\Clients\Domain\SSN;
+use App\Shared\Infrastructure\Database\Persistence\Doctrine\DoctrineRepository;
 
-class DoctrineClientRepository implements \App\Clients\Domain\ClientRepository
+class DoctrineClientRepository extends DoctrineRepository implements ClientRepository
 {
 
-    /**
-     * @inheritDoc
-     */
     public function getById(ClientId $clientId): Client
     {
-        // TODO: Implement getById() method.
+        $client = $this->repository(Client::class)->find($clientId);
+        if (!$client instanceof Client) {
+            throw new ClientNotExistsException($clientId);
+        }
+
+        return $client;
     }
 
     public function save(Client $client): void
     {
-        // TODO: Implement save() method.
+        try {
+            $this->persist($client);
+        } catch (\Throwable $throwable) {
+            dd($throwable);
+        }
     }
 
     public function findBySsn(SSN $ssn): ?Client
     {
-        // TODO: Implement findBySsn() method.
+        return $this->repository(Client::class)->findOneBy(['ssn' => $ssn->getSSN()]);
     }
 }

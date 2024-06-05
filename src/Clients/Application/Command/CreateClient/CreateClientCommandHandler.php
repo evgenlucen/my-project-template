@@ -22,7 +22,7 @@ class CreateClientCommandHandler implements CommandHandlerInterface
     ) {
     }
 
-    public function __invoke(CreateClientCommand $command): void
+    public function __invoke(CreateClientCommand $command): Client
     {
         // Предполагаем что уникальность клиента можем достаточно достоверно
         // определить по ssn.
@@ -36,7 +36,7 @@ class CreateClientCommandHandler implements CommandHandlerInterface
         $client = Client::create(
             firstName: $command->firstName,
             lastName: $command->lastName,
-            age: new DateOfBirth($command->age),
+            age: DateOfBirth::fromString($command->dateOfBirth),
             address: new AddressInUSA(
                 street: $command->state,
                 city: $command->city,
@@ -49,9 +49,12 @@ class CreateClientCommandHandler implements CommandHandlerInterface
             phoneNumber: new AmericanPhoneNumber($command->phoneNumber),
         );
 
+
         $this->clientRepository->save($client);
 
         // в реальном проекте убрать публикацию событий на событие flush из Doctrine
         array_map(fn (EventInterface $event) => $this->eventBus->execute($event), $client->releaseEvents());
+
+        return  $client;
     }
 }

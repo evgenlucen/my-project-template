@@ -54,7 +54,7 @@ api-restart-consumers:
 	${DOCKER_COMPOSE} restart api-getcourse-amo-consumer api-bizon-amo-consumer
 
 api-permissions:
-	docker run --rm -v ${PWD}/.:/app -w /. alpine mkdir vendor && chmod 777 var/cache var/log
+	docker run --rm -v ${PWD}/.:/app -w /. alpine mkdir vendor && mkdir -p var/cache var/test && chmod 777 var/cache var/log
 
 api-composer-install:
 	${DOCKER_COMPOSE} run --rm php-cli composer install
