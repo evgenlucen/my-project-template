@@ -2,8 +2,6 @@
 
 namespace App\Clients\Domain;
 
-use App\Shared\Infrastructure\API\FormatConstants\DateTimeFormat;
-
 class DateOfBirth
 {
     public function __construct(
@@ -13,7 +11,7 @@ class DateOfBirth
 
     public static function fromString(string $dateOfBirth)
     {
-        return new self(\DateTimeImmutable::createFromFormat(DateTimeFormat::api(),$dateOfBirth));
+        return new self(\DateTimeImmutable::createFromFormat(DATE_RFC3339,$dateOfBirth));
     }
 
     public function getValue(): \DateTimeImmutable

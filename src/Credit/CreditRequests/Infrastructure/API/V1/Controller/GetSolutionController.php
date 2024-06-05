@@ -2,7 +2,6 @@
 
 namespace App\Credit\CreditRequests\Infrastructure\API\V1\Controller;
 
-use App\Clients\Domain\ClientId;
 use App\Credit\CreditRequests\Application\Query\GetSolution\GetSolutionQuery;
 use App\Credit\CreditRequests\Infrastructure\API\V1\Requests\GetSolutionRequest;
 use App\Credit\CreditRequests\Infrastructure\API\V1\VIewFactory\SolutionViewFactory;
@@ -22,7 +21,7 @@ class GetSolutionController
     {
         $solution = $this->queryBus->execute(
             new GetSolutionQuery(
-                clientId: new ClientId($request->clientId),
+                clientId: $request->clientId,
                 periodInMonths: $request->periodInMonths,
                 creditAmount: $request->creditAmount,
             ),

@@ -2,18 +2,49 @@ parameters:
   paths:
     - ./src
   exclude_files:
-    - '#.*\/src\/.*\/Infrastructure\/Adapter\/.*#'
+    - '#.*\/src\/.*\/Infrastructure\/Adapters\/.*#'
   layers:
     - name: Shared
       collectors:
         - type: directory
           regex: /src/Shared/.*
-    - name: Users
+    - name: Clients
       collectors:
         - type: directory
-          regex: /src/Users/.*
+          regex: /src/Clients/.*
+    - name: Notifications
+      collectors:
+        - type: directory
+          regex: /src/Notifications/.*
+    - name: CreditRequests
+      collectors:
+        - type: directory
+          regex: /src/Credit/CreditRequests.*
+    - name: CreditProducts
+      collectors:
+        - type: directory
+          regex: /src/Credit/CreditProducts.*
+    - name: EmailGateway
+      collectors:
+        - type: directory
+          regex: /src/EmailGateway/.*
+    - name: SmsGateway
+      collectors:
+        - type: directory
+          regex: /src/SmsGateway/.*
+
   ruleset:
-    Users:
+    Clients:
       - Shared
-    Recipes:
+    Notifications:
+      - Shared
+    CreditRequests:
+      - Shared
+      - CreditProducts
+    CreditProducts:
+      - Shared
+      - CreditProducts
+    EmailGateway:
+      - Shared
+    SmsGateway:
       - Shared

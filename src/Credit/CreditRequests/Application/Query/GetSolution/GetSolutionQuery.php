@@ -2,7 +2,6 @@
 
 namespace App\Credit\CreditRequests\Application\Query\GetSolution;
 
-use App\Clients\Domain\ClientId;
 use App\Shared\Application\Query\QueryInterface;
 
 class GetSolutionQuery implements QueryInterface

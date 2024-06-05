@@ -4,6 +4,7 @@ namespace App\Credit\CreditRequests\Infrastructure\Adapters;
 
 use App\Clients\Domain\Client;
 use App\Clients\Infrastructure\API\Context\ClientContextApi;
+use App\Credit\CreditRequests\Domain\Address;
 use App\Credit\CreditRequests\Domain\Borrower;
 
 class ClientAdapter
@@ -20,7 +21,12 @@ class ClientAdapter
 
         return Borrower::create(
             age: $client->getDateOfBirth()->getAge(),
-            address: $client->getAddress(),
+            address: new Address(
+                street: $client->getAddress()->getStreet(),
+                city: $client->getAddress()->getCity(),
+                state: $client->getAddress()->getState(),
+                zipCode: $client->getAddress()->getZipCode(),
+            ),
             fico: $client->getFico(),
         );
     }

@@ -2,7 +2,6 @@
 
 namespace App\Credit\CreditRequests\Application\Command\CreateCreditRequest;
 
-use App\Clients\Domain\ClientId;
 use App\Shared\Application\Command\CommandInterface;
 
 /**

@@ -2,7 +2,6 @@
 
 namespace App\Credit\CreditRequests\Infrastructure\API\V1\Controller;
 
-use App\Clients\Domain\ClientId;
 use App\Credit\CreditRequests\Application\Command\CreateCreditRequest\CreateCreditRequestCommand;
 use App\Credit\CreditRequests\Infrastructure\API\V1\Requests\CreateCreditRequestRequest;
 use App\Shared\Application\Command\CommandSyncBusInterface;
@@ -21,7 +20,7 @@ class CreateCreditRequestController
     {
         $this->commandBus->execute(
             new CreateCreditRequestCommand(
-                clientId: new ClientId($request->clientId),
+                clientId: $request->clientId,
                 periodInMonths: $request->periodInMonths,
                 creditAmount: $request->creditAmount,
             ),

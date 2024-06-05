@@ -112,11 +112,11 @@ restart:
 ##################
 
 db_migrate:
-	${DOCKER_COMPOSE} exec -u www-data php-fpm bin/console doctrine:migrations:migrate --no-interaction
+	${DOCKER_COMPOSE} exec -u www-data php-cli bin/console doctrine:migrations:migrate --no-interaction
 db_diff:
-	${DOCKER_COMPOSE} exec -u www-data php-fpm bin/console doctrine:migrations:diff --no-interaction
+	${DOCKER_COMPOSE} exec -u www-data php-cli bin/console doctrine:migrations:diff --no-interaction
 db_drop:
-	docker compose -f ./docker/docker-compose.yml exec -u www-data php-fpm bin/console doctrine:schema:drop --force
+	docker compose -f ./docker/docker-compose.yml exec -u www-data php-clid bin/console doctrine:schema:drop --force
 
 
 ##################
@@ -127,7 +127,7 @@ phpstan:
 	${DOCKER_COMPOSE_PHP_FPM_EXEC} vendor/bin/phpstan analyse src tests -c phpstan.neon
 
 deptrac:
-	${DOCKER_COMPOSE_PHP_FPM_EXEC} vendor/bin/deptrac analyze deptrac-layers.yaml
+	${DOCKER_COMPOSE_PHP_FPM_EXEC} vendor/bin/deptrac analyze deptrack-modules.yaml
 	${DOCKER_COMPOSE_PHP_FPM_EXEC} vendor/bin/deptrac analyze deptrac-modules.yaml
 
 cs_fix:

@@ -3,7 +3,6 @@
 namespace App\Clients\Domain;
 
 use App\Clients\Domain\Exceptions\ClientNotExistsException;
-use App\Clients\Infrastructure\Persistence\Doctrine\ORM\PhoneNumberType;
 
 interface ClientRepository
 {

@@ -51,9 +51,13 @@ class SomeCreditProduct implements CreditProduct
         );
     }
 
+    /**
+     * Калькуляцию можно было бы избавить от знаний о Solution.
+     * Но здесь во имя упрощения допускаю смешения с CreditRequest->Solution
+     */
     public function calculateSolution(CreditRequest $creditRequest): Solution
     {
-        if ($creditRequest->getBorrower()->getFico()?->isLessThat(self::FICO_MINIMAL)) {
+        if ($creditRequest->getBorrower()->ficoIsLessThat(self::FICO_MINIMAL)) {
             return new NegativeSolution(
                 borrowerId: $creditRequest->getBorrower()->getId(),
                 creditProductTitle: self::TITLE,

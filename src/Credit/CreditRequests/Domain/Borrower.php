@@ -2,9 +2,6 @@
 
 namespace App\Credit\CreditRequests\Domain;
 
-use App\Clients\Domain\AddressInUSA;
-use App\Clients\Domain\FICO;
-
 /**
  * Объект фиксирует данные, с которыми клиент обратился за кредитом.
  * Содержит только то, что нужно для расчета кредитным продуктам.
@@ -15,15 +12,15 @@ class Borrower implements \JsonSerializable
     public function __construct(
         private readonly BorrowerId $id,
         private readonly int $age, // возраст на момент подачи заявки
-        private readonly AddressInUSA $address,
-        private readonly FICO $fico,
+        private readonly Address $address,
+        private readonly int $fico,
     ) {
     }
 
     public static function create(
         int $age,
-        AddressInUSA $address,
-        FICO $fico,
+        Address $address,
+        int $fico,
     ): self {
         return new self (
             id: BorrowerId::generate(),
@@ -38,13 +35,13 @@ class Borrower implements \JsonSerializable
         return new self (
             id: new BorrowerId($borrowerInArray['id']),
             age: $borrowerInArray['age'],
-            address: new AddressInUSA(
+            address: new Address(
                 street: $borrowerInArray['address']['street'],
                 city: $borrowerInArray['address']['city'],
                 state: $borrowerInArray['address']['state'],
                 zipCode: $borrowerInArray['address']['zipCode'],
             ),
-            fico: new FICO($borrowerInArray['fico']),
+            fico: (int) $borrowerInArray['fico'],
         );
     }
 
@@ -54,14 +51,19 @@ class Borrower implements \JsonSerializable
         return $this->age;
     }
 
-    public function getAddress(): AddressInUSA
+    public function getAddress(): Address
     {
         return $this->address;
     }
 
-    public function getFico(): ?FICO
+    public function getFico(): int
     {
         return $this->fico;
+    }
+
+    public function ficoIsLessThat(int $fico): bool
+    {
+        return $this->fico < $fico;
     }
 
     public function getId(): BorrowerId
@@ -80,7 +82,7 @@ class Borrower implements \JsonSerializable
             'address' => $this->address->toArray(),
             'id' => $this->id->toString(),
             'age' => $this->age,
-            'fico' => $this->fico->getValue(),
+            'fico' => $this->fico,
         ];
     }
 }
