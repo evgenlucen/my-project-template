@@ -37,7 +37,7 @@ class CreateClientController
         );
         \assert($client instanceof Client);
 
-        return new JsonResponse(ClientViewFactory::jsonApi($client));
+        return new JsonResponse(['data' =>ClientViewFactory::jsonApi($client)]);
 
     }
 

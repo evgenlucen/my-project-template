@@ -1,0 +1,241 @@
+openapi: 3.0.0
+
+info:
+  title: Тестовое задание
+  version: 1.0.0
+
+  description: |
+    API системы выдачи кредитов
+
+paths:
+  /api/v1/clients:
+    post:
+      tags: ['Clients']
+      summary: Создать клиента
+      operationId: clientsCreate
+      description: |
+        Создать клиента
+      requestBody:
+        $ref: '#/components/requestBodies/CreateClientRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/ClientResponse'
+
+  /api/v1/clients/{id}:
+    patch:
+      tags: [ 'Clients' ]
+      summary: Обновить клиента
+      operationId: clientsUpdate
+      description: |
+        Обновить клиента
+      requestBody:
+        $ref: '#/components/requestBodies/UpdateClientRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/ClientResponse'
+
+  /api/v1/credit-requests:
+    patch:
+      tags: [ 'CreditRequests' ]
+      summary: Создать заявку на кредит
+      operationId: creditRequestCreate
+      description: |
+        Создать заявку на кредит
+      requestBody:
+        $ref: '#/components/requestBodies/CreateCreditRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/CreditRequestCreatedResponse'
+
+  /api/v1/credit-requests:solution:
+    patch:
+      tags: [ 'CreditRequests' ]
+      summary: Получить решение по запросу на кредит
+      operationId: creditRequestSolution
+      description: |
+        Получить решение по запросу на кредит
+      requestBody:
+        $ref: '#/components/requestBodies/CreateCreditSolutionRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/CreditRequestCreatedResponse'
+
+components:
+  requestBodies:
+    CreateCreditRequest:
+      description: |
+        Тело запроса для создания клиента
+      content:
+        application/vnd.api+json:
+          schema:
+            type: object
+            required:
+              - clientId
+              - periodInMonths
+              - creditAmount
+            properties:
+              clientId:
+                type: string
+              periodInMonths:
+                type: integer
+              creditAmount:
+                type: integer
+
+    CreateCreditSolutionRequest:
+      description: |
+        Тело запроса для создания клиента
+      content:
+        application/vnd.api+json:
+          schema:
+            type: object
+            required:
+              - clientId
+              - periodInMonths
+              - creditAmount
+            properties:
+              clientId:
+                type: string
+              periodInMonths:
+                type: integer
+              creditAmount:
+                type: integer
+
+    CreateClientRequest:
+      description: |
+        Тело запроса для создания клиента
+      content:
+        application/vnd.api+json:
+          schema:
+            type: object
+            required:
+              - firstName
+              - lastName
+              - ssn
+              - phoneNumber
+              - email
+              - state
+              - street
+              - city
+              - zipCode
+              - dateOfBirth
+            properties:
+              firstName:
+                type: string
+              lastName:
+                type: string
+              ssn:
+                type: string
+              phoneNumber:
+                type: string
+              email:
+                type: string
+              state:
+                type: string
+              street:
+                type: string
+              city:
+                type: string
+              zipCode:
+                type: string
+              dateOfBirth:
+                type: string
+                format: date-time
+
+    UpdateClientRequest:
+      description: |
+        Тело запроса для обновления клиента
+      content:
+        application/vnd.api+json:
+          schema:
+            type: object
+            properties:
+              firstName:
+                type: string
+              lastName:
+                type: string
+              ssn:
+                type: string
+              email:
+                type: string
+              zipCode:
+                type: string
+
+  responses:
+    CreditRequestSolutionResponse:
+      description: New response
+      content:
+        application/json:
+          schema:
+            properties:
+              type:
+                type: string
+              attributes:
+                type: object
+                properties:
+                  client:
+                    type: string
+                  creditProductTitle:
+                    type: string
+                  percentRate:
+                    type: number
+                  creditAmount:
+                    type: number
+                  periodInMonth:
+                    type: integer
+
+    CreditRequestCreatedResponse:
+      description: Создана кредитная заявка
+      content:
+        application/json:
+          schema:
+            properties:
+              success:
+                type: boolean
+              message:
+                type: string
+
+    ClientResponse:
+      description: Клиент
+      content:
+        application/json:
+          schema:
+            type: object
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                properties:
+                  type:
+                    type: string
+                  id:
+                    type: string
+                  attributes:
+                    type: object
+                    properties:
+                      firstName:
+                        type: string
+                      lastName:
+                        type: string
+                      dateOfBirth:
+                        type: string
+                        format: date-time
+                      address:
+                        type: object
+                        properties:
+                          street:
+                            type: string
+                          city:
+                            type: string
+                          state:
+                            type: string
+                          zipCode:
+                            type: string
+                      ssn:
+                        type: string
+                      fico:
+                        type: string
+                      email:
+                        type: string
+                      phoneNumber:
+                        type: string
