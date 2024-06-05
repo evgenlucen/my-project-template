@@ -15,8 +15,11 @@ init-ci: docker-down-clear \
 	api-ready \
 	queues
 
-docker-down-clear:
+docker-down-clear: create-env-file create-docker-compose-file
 	${DOCKER_COMPOSE} down -v --remove-orphans
+
+#docker-env:
+#	cp -n ./docker/.env.dist ./docker/.env
 
 ##################
 # Queues
@@ -141,6 +144,6 @@ cs_fix_diff:
 ##################
 
 create-env-file:
-	test -f docker/.env || cp docker/.env.dist docker/.env
+	cp -n ./docker/.env.dist ./docker/.env
 create-docker-compose-file:
 	test -f docker/docker-compose.yml || cp docker/docker-compose.dist.yml docker/docker-compose.yml
