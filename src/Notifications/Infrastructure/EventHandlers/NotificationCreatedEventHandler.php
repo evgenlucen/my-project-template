@@ -4,13 +4,13 @@ namespace App\Notifications\Infrastructure\EventHandlers;
 
 use App\Notifications\Application\Send\SendNotificationCommand;
 use App\Notifications\Domain\Event\NotificationCreatedEvent;
-use App\Shared\Application\Command\CommandBusInterface;
+use App\Shared\Application\Command\CommandSyncBusInterface;
 use App\Shared\Domain\Event\EventHandlerInterface;
 
 class NotificationCreatedEventHandler implements EventHandlerInterface
 {
     public function __construct(
-        private readonly CommandBusInterface $commandBus,
+        private readonly CommandSyncBusInterface $commandBus,
     ) {
     }
 
