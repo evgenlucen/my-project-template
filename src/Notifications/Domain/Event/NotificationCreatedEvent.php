@@ -2,14 +2,19 @@
 
 namespace App\Notifications\Domain\Event;
 
-use App\Notifications\Domain\Notification;
+use App\Notifications\Domain\NotificationId;
+use App\Notifications\Infrastructure\EventHandlers\NotificationCreatedEventHandler;
 use App\Shared\Domain\Event\EventInterface;
 
+/**
+ * @see NotificationCreatedEventHandler
+ */
 class NotificationCreatedEvent implements EventInterface
 {
     private readonly \DateTimeImmutable $occuredAt;
+
     public function __construct(
-        public readonly Notification $notification
+        public readonly NotificationId $notificationId,
     ) {
         $this->occuredAt = new \DateTimeImmutable();
     }

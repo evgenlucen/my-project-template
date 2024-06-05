@@ -24,4 +24,20 @@ class ClientAdapter
             fico: $client->getFico(),
         );
     }
+
+    public function getBorrowerPhone(string $id): string
+    {
+        /** @var Client $client */
+        $client = $this->clientContextApi->getClientById($id);
+
+        return $client->getPhoneNumber()->getValue();
+    }
+
+    public function getBorrowerEmail(string $id): string
+    {
+        /** @var Client $client */
+        $client = $this->clientContextApi->getClientById($id);
+
+        return $client->getEmail()->getValue();
+    }
 }

@@ -40,6 +40,16 @@ class CreditRequest extends Aggregate
         $this->recordEvent(new CreditRequestGotSolution($this->id));
     }
 
+    public function hasPositiveSolution(): bool
+    {
+        return $this->solution->getType() === SolutionType::POSITIVE;
+    }
+
+    public function hasNegativeSolution(): bool
+    {
+        return $this->solution->getType() === SolutionType::NEGATIVE;
+    }
+
     public function getBorrower(): Borrower
     {
         return $this->borrower;

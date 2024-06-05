@@ -3,6 +3,7 @@
 namespace App\Notifications\Application\Create;
 
 use App\Notifications\Domain\DeliveryStatus;
+use App\Notifications\Domain\Event\NotificationCreatedEvent;
 use App\Notifications\Domain\Notification;
 use App\Notifications\Domain\NotificationRepository;
 use App\Shared\Application\Command\CommandHandlerInterface;
@@ -16,9 +17,6 @@ class CreateNotificationCommandHandler implements CommandHandlerInterface
     ) {
     }
 
-    /**
-     * @throws \Exception
-     */
     public function __invoke(CreateNotificationCommand $command): Notification
     {
         $notification = Notification::create(
@@ -31,7 +29,8 @@ class CreateNotificationCommandHandler implements CommandHandlerInterface
 
         $this->repository->save($notification);
 
-        // $this->eventBus->execute(new NotificationCreatedEvent($notification));
+        // надо релизить из агрегата по save событию доктрины, но упрощаю
+        $this->eventBus->execute(new NotificationCreatedEvent($notification->getId()));
 
         return $notification;
     }

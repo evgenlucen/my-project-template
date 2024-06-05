@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Notifications\Infrastructure;
+namespace App\Notifications\Infrastructure\Api\Context;
 
 use App\Notifications\Application\Create\CreateNotificationCommand;
-use App\Notifications\Domain\DeliveryStatus;
 use App\Notifications\Domain\DeliveryTool;
 use App\Shared\Application\Command\CommandSyncBusInterface;
 
@@ -27,21 +26,31 @@ class NotificationsContextApi
         ));
     }
 
-    public function sendSmsNotification(
-        string $context,
+    public function createSmsNotification(
+        string $content,
         string $recipient,
         \DateTimeImmutable $deliveryTime,
     )
     {
-        // Todo implement
+        return $this->commandBus->execute(new CreateNotificationCommand(
+            content: $content,
+            recipient: $recipient,
+            deliveryTool: DeliveryTool::SMS,
+            deliveryTime: $deliveryTime,
+        ));
     }
 
-    public function sendEmailNotification(
-        string $context,
+    public function createEmailNotification(
+        string $content,
         string $recipient,
         \DateTimeImmutable $deliveryTime,
     )
     {
-        // TODO Implement
+        return $this->commandBus->execute(new CreateNotificationCommand(
+            content: $content,
+            recipient: $recipient,
+            deliveryTool: DeliveryTool::EMAIL,
+            deliveryTime: $deliveryTime,
+        ));
     }
 }

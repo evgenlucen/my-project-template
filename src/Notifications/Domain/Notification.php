@@ -2,6 +2,7 @@
 
 namespace App\Notifications\Domain;
 
+use App\Notifications\Domain\Event\NotificationSentSuccess;
 use App\Shared\Domain\Entity\Aggregate;
 use App\Shared\Domain\Service\DateTimeService;
 use App\Shared\Domain\Service\UlidService;
@@ -85,11 +86,19 @@ class Notification extends Aggregate
     {
         $this->deliveryStatus = DeliveryStatus::DELIVERY_ERROR;
         $this->updatedAt = DateTimeService::createNow();
+        // событие
     }
 
     public function delivered(): void
     {
         $this->deliveryStatus = DeliveryStatus::DELIVERED;
+        $this->updatedAt = DateTimeService::createNow();
+    }
+
+    /** Сообщение отправлено. Статус доставки не известен */
+    public function sent(): void
+    {
+        $this->deliveryStatus = DeliveryStatus::SENT;
         $this->updatedAt = DateTimeService::createNow();
     }
 

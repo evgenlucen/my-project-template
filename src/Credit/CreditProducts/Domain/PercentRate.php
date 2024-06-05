@@ -7,7 +7,7 @@ use App\Shared\Domain\Service\AssertService;
 class PercentRate
 {
     public function __construct(
-        public readonly float $percentRate
+        private readonly float $percentRate
     )
     {
         AssertService::positiveInteger((int) $this->percentRate);

@@ -9,4 +9,6 @@ enum DeliveryStatus: string
 
     case DELIVERY_ERROR = 'delivery_error';
     case CANCELED = 'canceled';
+
+    case SENT = 'send';
 }
