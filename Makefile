@@ -4,7 +4,7 @@
 
 DOCKER_COMPOSE = docker compose -f ./docker/docker-compose.yml --env-file ./docker/.env
 DOCKER_COMPOSE_PHP_FPM_EXEC = ${DOCKER_COMPOSE} exec -u www-data php-fpm
-
+PROJECT_NAME = project_name
 
 
 init: init-ci
@@ -28,10 +28,10 @@ rabbit-up:
 	${DOCKER_COMPOSE} up -d rabbitmq
 
 rabbit-queues:
-	docker exec rabbitmq /bin/bash -c 'sleep 5 \
-			&& rabbitmqadmin -u user -p rabbitmq -V / declare exchange name=queue_name type=fanout \
-			&& rabbitmqadmin -u user -p rabbitmq -V / declare queue name=queue_name queue_type=quorum \
-			&& rabbitmqadmin -u user -p rabbitmq -V / declare binding source=queue_name destination=queue_name'
+	docker exec ${PROJECT_NAME}-rabbitmq /bin/bash -c 'sleep 5 \
+			&& rabbitmqadmin -u user -p rabbitmq -V / declare exchange name=events type=fanout \
+			&& rabbitmqadmin -u user -p rabbitmq -V / declare queue name=events queue_type=quorum \
+			&& rabbitmqadmin -u user -p rabbitmq -V / declare binding source=events destination=events'
 
 ##################
 # API
@@ -51,7 +51,7 @@ api-migrations:
 	${DOCKER_COMPOSE} run --rm php-cli bin/console doctrine:migrations:migrate --no-interaction
 
 api-restart-consumers:
-	${DOCKER_COMPOSE} restart api-getcourse-amo-consumer api-bizon-amo-consumer
+	${DOCKER_COMPOSE} restart api-event-consumer
 
 api-permissions:
 	docker run --rm -v ${PWD}/.:/app -w /. alpine mkdir vendor && mkdir -p var/cache var/test && chmod 777 var/cache var/log

@@ -21,6 +21,6 @@ class SsnType extends StringType
 
     public function convertToDatabaseValue($value, AbstractPlatform $platform)
     {
-        return $value instanceof SSN ? $value->getSSN() : $value;
+        return $value instanceof SSN ? $value->getOriginalSsn() : $value;
     }
 }

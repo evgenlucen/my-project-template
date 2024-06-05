@@ -34,7 +34,7 @@ class DoctrineClientRepository extends DoctrineRepository implements ClientRepos
 
     public function findBySsn(SSN $ssn): ?Client
     {
-        return $this->repository(Client::class)->findOneBy(['ssn' => $ssn->getSSN()]);
+        return $this->repository(Client::class)->findOneBy(['ssn' => $ssn->getOriginalSsn()]);
     }
 
     public function findByEmail(Email $email)

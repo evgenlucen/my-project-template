@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   php-fpm:
-    container_name: php-fpm
+    container_name: ${COMPOSE_PROJECT_NAME}-php-fpm
     build:
       context: ./../docker
       dockerfile: development/php-fpm/Dockerfile
@@ -14,7 +14,7 @@ services:
       - ./../:/app
 
   php-cli:
-    container_name: php-cli
+    container_name: ${COMPOSE_PROJECT_NAME}-php-cli
     build:
       context: ./../docker
       dockerfile: development/php-cli/Dockerfile
@@ -26,25 +26,21 @@ services:
       - ./../:/app
 
   # Консьюмер очереди. Заменить  api-some-consumer, queue_name
-#  api-some-consumer:
-#    container_name: api-some-consumer
-#    build:
-#      context: ./../docker
-#      dockerfile: development/php-cli/Dockerfile
-#      args:
-#        - PUID=${PUID}
-#        - PGID=${PGID}
-#        - INSTALL_XDEBUG=${INSTALL_XDEBUG}
-#    environment:
-#      PHP_IDE_CONFIG: "serverName=Docker"
-#    volumes:
-#      - ./../:/app
-#    command: sh -c "wait-for-it rabbitmq:5672 -t 60 && sleep 1 && php bin/console messenger:consume queue_name"
-#    restart: always
+  api-event-consumer:
+    container_name: ${COMPOSE_PROJECT_NAME}-api-event-consumer
+    build:
+      context: ./../docker
+      dockerfile: development/php-cli/Dockerfile
+    environment:
+      PHP_IDE_CONFIG: "serverName=Docker"
+    volumes:
+      - ./../:/app
+    command: sh -c "wait-for-it rabbitmq:5672 -t 60 && sleep 1 && php bin/console messenger:consume events --limit=200"
+    restart: always
 
 
   nginx:
-    container_name: nginx
+    container_name: ${COMPOSE_PROJECT_NAME}-nginx
     build:
       context: ./../docker
       dockerfile: development/nginx/Dockerfile
@@ -56,7 +52,7 @@ services:
       - php-fpm
 
   postgres:
-    container_name: postgres
+    container_name: ${COMPOSE_PROJECT_NAME}-postgres
     build:
       context: ./../docker
       dockerfile: development/postgres/Dockerfile
@@ -70,7 +66,7 @@ services:
       - db_data:/var/lib/postgresql/data:rw
 
   rabbitmq:
-    container_name: rabbitmq
+    container_name: ${COMPOSE_PROJECT_NAME}-rabbitmq
     build:
       context: ./../docker/development
       dockerfile: rabbitmq/Dockerfile

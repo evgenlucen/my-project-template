@@ -14,6 +14,14 @@ framework:
 
         # https://symfony.com/doc/current/messenger.html#transport-configuration
         transports:
+          events:
+            dsn: '%env(RABBIT_EVENTS_QUEUE_DSN)%'
+            options:
+              verify: false
+              queues:
+                events:
+                  arguments:
+                    x-queue-type: 'quorum'
 #            some-async: #  TODO CHANGE ME
 #                dsn: '%env(RABBIT_QUEUE_QUEUE_NAME)%' #  TODO CHANGE ME
 #                options:
@@ -28,4 +36,5 @@ framework:
             #sync: 'sync://'
 
         routing:
+          App\Shared\Domain\Event\EventInterface: events
             #'App\SomeNamespaceCommand\': some-async # TODO CHANGE ME
