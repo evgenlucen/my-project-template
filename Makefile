@@ -24,18 +24,8 @@ docker-down-clear: create-env-file create-docker-compose-file
 ##################
 # Queues
 ##################
-queues: rabbit-up \
-	rabbit-queues
-
-rabbit-up:
-	${DOCKER_COMPOSE} up -d rabbitmq
-
-rabbit-queues:
-	docker exec ${PROJECT_NAME}-rabbitmq /bin/bash -c 'sleep 5 \
-			&& rabbitmqadmin -u user -p rabbitmq -V / declare exchange name=events type=fanout \
-			&& rabbitmqadmin -u user -p rabbitmq -V / declare queue name=events queue_type=quorum \
-			&& rabbitmqadmin -u user -p rabbitmq -V / declare binding source=events destination=events'
-
+queues:
+	${DOCKER_COMPOSE} run --rm php-cli bin/console messenger:setup-transports
 ##################
 # API
 ##################
