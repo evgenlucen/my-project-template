@@ -12,6 +12,8 @@ services:
       PHP_IDE_CONFIG: "serverName=Docker"
     volumes:
       - ./../:/app
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   php-cli:
     container_name: ${COMPOSE_PROJECT_NAME}-php-cli
@@ -24,6 +26,8 @@ services:
       PHP_IDE_CONFIG: "serverName=Docker"
     volumes:
       - ./../:/app
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   # Консьюмер очереди. Заменить  api-some-consumer, queue_name
   api-event-consumer:
